@@ -1,1 +1,0 @@
-# Finanzmanager_Alex_Laszlo
