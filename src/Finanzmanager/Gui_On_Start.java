@@ -3,10 +3,8 @@ package Finanzmanager;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
+import javafx.scene.control.Button;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -18,23 +16,50 @@ public class Gui_On_Start extends Application{
 
         Image icon = new Image(getClass().getResourceAsStream("/app_icon.png"));
         stage.setTitle("Finanzmanager");
-        Label label = new Label("Hallo");
-        GridPane layout = new GridPane();
-        layout.setHgap(20);
-        layout.setVgap(20);
-        layout.setGridLinesVisible(true);
-        layout.setAlignment(Pos.CENTER);
+
+        BorderPane root = new BorderPane();
+
+        VBox balance = new VBox();
+        Label balanceLabel = new Label("Balance:");
+        Label balanceAmnt = new Label("Amount");
+
+        balance.getChildren().addAll(balanceLabel, balanceAmnt);
+
+        root.setTop(balance);
+
+        GridPane grid = new GridPane();
         ColumnConstraints col1 = new ColumnConstraints();
         col1.setPercentWidth(50);
-
         ColumnConstraints col2 = new ColumnConstraints();
         col2.setPercentWidth(50);
+        grid.getColumnConstraints().addAll(col1, col2);
 
-        layout.getColumnConstraints().addAll(col1, col2);
-        Scene scene = new Scene(layout, 1024, 1024);
-        layout.add(label, 1, 0);
+
+        VBox earnings = new VBox(5);
+        Label earnLabel = new Label("Earnings");
+        Label earnAmnt = new Label("x.xx€");
+        earnings.getChildren().addAll(earnLabel, earnAmnt);
+
+        VBox expenses = new VBox(5);
+        Label expensesLabel = new Label("Expenses");
+        Label expenseAmnt = new Label("x.xx€");
+        expenses.getChildren().addAll(expensesLabel, expenseAmnt);
+
+        Button newEarning = new Button("New Earning");
+        newEarning.setMaxWidth(Double.MAX_VALUE);
+        Button newExpense = new Button("New Expense");
+        newExpense.setMaxWidth(Double.MAX_VALUE);
+
+        grid.add(earnings, 0, 0);
+        grid.add(expenses, 1, 0);
+        grid.add(newEarning, 0, 1);
+        grid.add(newExpense, 1, 1);
+
+        root.setCenter(grid);
+
+        Scene scene = new Scene(root, 400, 700);
+
         scene.getStylesheets().add(getClass().getResource("stylesheet.css").toExternalForm());
-
         stage.setScene(scene);
         stage.show();
         stage.getIcons().add(icon);
