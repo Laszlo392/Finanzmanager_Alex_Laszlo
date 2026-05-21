@@ -9,11 +9,14 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 
 
 public class Gui_On_Start extends Application{
     @Override
     public void start(Stage stage) throws Exception {
+
+        Image icon = new Image(getClass().getResourceAsStream("/app_icon.png"));
         stage.setTitle("Finanzmanager");
         Label label = new Label("Hallo");
         GridPane layout = new GridPane();
@@ -24,22 +27,21 @@ public class Gui_On_Start extends Application{
         ColumnConstraints col1 = new ColumnConstraints();
         col1.setPercentWidth(50);
 
-// Zweite Spalte soll auch 50% des Fensters einnehmen
         ColumnConstraints col2 = new ColumnConstraints();
         col2.setPercentWidth(50);
 
-// Die Regeln dem Grid hinzufügen
         layout.getColumnConstraints().addAll(col1, col2);
-        Scene scene = new Scene(layout, 300, 300);
+        Scene scene = new Scene(layout, 1024, 1024);
         layout.add(label, 1, 0);
         scene.getStylesheets().add(getClass().getResource("stylesheet.css").toExternalForm());
 
         stage.setScene(scene);
         stage.show();
+        stage.getIcons().add(icon);
 
     }
 
     public static void main(String[] args) {
-        launch();
+        launch(args);
     }
 }
