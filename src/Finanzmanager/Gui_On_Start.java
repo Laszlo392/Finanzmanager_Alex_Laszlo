@@ -3,6 +3,7 @@ package Finanzmanager;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.chart.Chart;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
@@ -18,10 +19,13 @@ public class Gui_On_Start extends Application{
         stage.setTitle("Finanzmanager");
 
         BorderPane root = new BorderPane();
+        root.setId("root");
 
         VBox balance = new VBox();
+        balance.setId("balanceBox");
         Label balanceLabel = new Label("Balance:");
         Label balanceAmnt = new Label("Amount");
+        balanceAmnt.setId("balanceAmnt");
 
         balance.getChildren().addAll(balanceLabel, balanceAmnt);
 
@@ -36,13 +40,17 @@ public class Gui_On_Start extends Application{
 
 
         VBox earnings = new VBox(5);
+        earnings.setId("detailBox");
         Label earnLabel = new Label("Earnings");
         Label earnAmnt = new Label("x.xx€");
+        earnAmnt.setId("number");
         earnings.getChildren().addAll(earnLabel, earnAmnt);
 
         VBox expenses = new VBox(5);
-        Label expensesLabel = new Label("Expenses");
+        expenses.setId("detailBox");
+        Label expensesLabel = new Label("Expenses:");
         Label expenseAmnt = new Label("x.xx€");
+        expenseAmnt.setId("number");
         expenses.getChildren().addAll(expensesLabel, expenseAmnt);
 
         Button newEarning = new Button("New Earning");
@@ -57,9 +65,10 @@ public class Gui_On_Start extends Application{
 
         root.setCenter(grid);
 
-        Scene scene = new Scene(root, 400, 700);
+        Scene scene = new Scene(root, 400, 300);
 
         scene.getStylesheets().add(getClass().getResource("stylesheet.css").toExternalForm());
+        stage.setMaximized(true);
         stage.setScene(scene);
         stage.show();
         stage.getIcons().add(icon);
