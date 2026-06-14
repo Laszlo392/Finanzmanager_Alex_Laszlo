@@ -202,6 +202,10 @@ public class Gui_On_Start extends Application {
             System.out.println("Stylesheet konnte nicht geladen werden.");
         }
 
+        stage.setOnCloseRequest(windowEvent -> {
+            logik.datenSpeichern();
+        });
+
         stage.setScene(scene);
         stage.show();
     }
