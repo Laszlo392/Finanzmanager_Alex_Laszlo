@@ -89,12 +89,11 @@ import java.util.Optional;
 
 public class Gui_On_Start extends Application {
 
-    // Verbindung zur Logik-Klasse herstellen
+    // verbindung mit logik
     private FinanzmanagerLogik logik = new FinanzmanagerLogik();
 
     @Override
     public void start(Stage stage) throws Exception {
-        // Falls das Icon nicht existiert, fangen wir den Fehler ab
         try {
             Image icon = new Image(getClass().getResourceAsStream("/app_icon.png"));
             stage.getIcons().add(icon);
@@ -107,18 +106,16 @@ public class Gui_On_Start extends Application {
         BorderPane root = new BorderPane();
         root.setId("root");
 
-        // --- TOP AREA: BALANCE ---
         VBox balance = new VBox();
         balance.setId("balanceBox");
         Label balanceLabel = new Label("Kontostand:");
-        // Wir nutzen den Wert aus deiner Logik!
+
         Label balanceAmnt = new Label(String.format("%.2f €", logik.getKontostand()));
         balanceAmnt.setId("balanceAmnt");
 
         balance.getChildren().addAll(balanceLabel, balanceAmnt);
         root.setTop(balance);
 
-        // --- CENTER AREA: GRID ---
         GridPane grid = new GridPane();
         ColumnConstraints col1 = new ColumnConstraints();
         col1.setPercentWidth(50);
@@ -152,9 +149,8 @@ public class Gui_On_Start extends Application {
 
         root.setCenter(grid);
 
-        // --- BUTTON LOGIK ---
 
-        // Event-Handler für Einnahmen
+
         newEarning.setOnAction(e -> {
             TextInputDialog dialog = new TextInputDialog();
             dialog.setTitle("Einnahme");
@@ -210,7 +206,6 @@ public class Gui_On_Start extends Application {
         stage.show();
     }
 
-    // Hilfsmethode um die Anzeige zu aktualisieren
     private void updateLabels(Label balance, Label earn, Label expense) {
         balance.setText(String.format("%.2f €", logik.getKontostand()));
         earn.setText(String.format("%.2f €", logik.getGesamtEinnahmen()));

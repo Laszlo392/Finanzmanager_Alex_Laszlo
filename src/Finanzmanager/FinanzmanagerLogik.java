@@ -27,30 +27,27 @@ public class FinanzmanagerLogik {
         if (betrag > 0) {
             gesamtEinnahmen += betrag;
         } else {
-            gesamtAusgaben += betrag; // Bleibt im Minus
+            gesamtAusgaben += betrag;
         }
     }
 
     public void datenSpeichern() {
         try (DataOutputStream dos = new DataOutputStream(new FileOutputStream("finanzen.dat"))) {
-            // 1. Zuerst schreiben wir die Anzahl der Einträge, damit wir beim Laden wissen, wie oft wir schleifen müssen
+            // Anzahl der Einträge
             dos.writeInt(eintraege.size());
 
-            // 2. Jeden einzelnen Eintrag in Bytes zerlegt herausschreiben
+            // Einträge in Bytes
             for (Eintrag e : eintraege) {
                 dos.writeUTF(e.getZweck());
                 dos.writeDouble(e.getBetrag());
             }
 
-            System.out.println("Daten erfolgreich via Byte I/O gespeichert!");
+            System.out.println("Daten gespeichert!");
         } catch (IOException e) {
-            System.err.println("Fehler beim Speichern der Daten: " + e.getMessage());
+            System.err.println("Fehler beim Speichern: " + e.getMessage());
         }
     }
 
-    /**
-     * Lädt die gespeicherten Einträge aus der Binärdatei und berechnet die Stände neu.
-     */
     public void datenLaden() {
         try (DataInputStream dis = new DataInputStream(new FileInputStream("finanzen.dat"))) {
             // Liste und Beträge vor dem Laden zurücksetzen
@@ -59,22 +56,21 @@ public class FinanzmanagerLogik {
             this.gesamtEinnahmen = 0.00;
             this.gesamtAusgaben = 0.00;
 
-            // 1. Anzahl der gespeicherten Einträge einlesen
+            //gespeicherten Einträge einlesen
             int anzahl = dis.readInt();
 
-            // 2. Schleife läuft genau so oft, wie Objekte existieren
             for (int i = 0; i < anzahl; i++) {
                 String zweck = dis.readUTF();
                 double betrag = dis.readDouble();
 
-                // Nutze deine bestehende Methode, um die Werte direkt wieder zu verrechnen
+                //Werte direkt wieder zu berechnen
                 transaktionHinzufuegen(zweck, betrag);
             }
 
-            System.out.println("Daten erfolgreich via Byte I/O geladen!");
+            System.out.println("Daten geladen!");
         } catch (IOException e) {
-            // Wenn die Datei beim ersten Start noch nicht existiert, ist das normal
-            System.out.println("Keine alte Speicherdatei gefunden. Starte mit Leeren Daten.");
+            // Wenn die Datei noch nicht existiert
+            System.out.println("Keine alte Speicherdatei gefunden");
         }
     }
 
